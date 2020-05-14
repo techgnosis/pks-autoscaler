@@ -12,16 +12,23 @@ OM_TARGET=url
 PKS_API=url
 
 # Username to interact with the PKS API with
-PKS_USERNAME=admin
+PKS_USERNAME=username
 
-# PKS Admin user password
+# PKS user password
 PKS_PASSWORD=password
 
+# Maximum number of K8s worker nodes to scale up to
 max_worker_count=10
+
+# Minimum number of K8s worker nodes to scale down to
 min_worker_count=1
 
-# Use the below % values to set the high and low average CPU and MEM watermark
-# of worker nodes before resizing kicks in to adjust the load.
+# If average cluster CPU is lower than this number, the cluster scales down
 MIN_TOTAL_CPU=10
+
+# If average cluster CPU is higher than this number, the cluster scales up
 MAX_TOTAL_CPU=60
+
+# Average memory usage must be below this number to allow a scale down
+# Average memory usage above this number will trigger a scale up 
 MAX_TOTAL_MEM=60
