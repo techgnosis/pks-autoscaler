@@ -35,7 +35,7 @@ if [[ ${ENABLE_SCRIPT} -eq 1 ]]
 then
     om -k -t ${OM_TARGET} -u ${OM_USERNAME} -p ${OM_PASSWORD} bosh-env > $TEMPFILE
    	source $TEMPFILE
-   	om -k -t localhost -u ${OM_USERNAME} -p ${OM_PASSWORD} deployed-manifest -p pivotal-container-service |yq . > /tmp/pks_manifest.yaml
+   	om -k -t localhost -u ${OM_USERNAME} -p ${OM_PASSWORD} deployed-manifest -p pivotal-container-service | yaml2json | jq . > /tmp/pks_manifest.yaml
    	PKS_API=`cat /tmp/pks_manifest.yaml |jq -r '.instance_groups[].properties.service_catalog.global_properties.pks_api_fqdn'`
    	PKS_PASSWORD=`om  -k -t localhost -u ${OM_USERNAME} -p ${OM_PASSWORD} credentials --product-name pivotal-container-service -c .properties.uaa_admin_password -t json|jq -r '.secret'`
 
