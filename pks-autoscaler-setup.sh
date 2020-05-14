@@ -1,6 +1,8 @@
 #!/bin/bash
 
-cp pks-autoscaler.config.template pks-autoscaler.config
+if [ ! -f pks-autoscaler.config ]; then
+	cp pks-autoscaler.config.template pks-autoscaler.config
+fi
 source pks-autoscaler.config
 
 echo "PKS-AUTOSCASLER PRE-REQ INSTALLER AND CHECKER"
