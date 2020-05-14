@@ -16,6 +16,15 @@ else
     sudo mv om-linux-4.5.0 /usr/local/bin/om
 fi
 
+if command -v yaml2json >/dev/null 2>&1 ; then
+  	echo "yaml2json installed. Skipping...."
+else
+  	echo "yaml2json not installed. Installing...."
+    wget https://github.com/bronze1man/yaml2json/releases/download/v1.3/yaml2json_linux_amd64
+    chmod +x yaml2json_linux_amd64
+    sudo mv yaml2json_linux_amd64 /usr/local/bin/yaml2json
+fi
+
 if command -v pks >/dev/null 2>&1 ; then
   	echo "PKS CLI installed. Skipping...."
 else
@@ -26,16 +35,4 @@ else
 fi
 
 sudo apt-get -y update
-sudo apt-get -y install bc jq python-pip
-sudo -H pip install yq
-
-
-
-read -p "Provide Opsman username, that will be used to execute this script: " name
-read -p "Enter password for ${name}: " password
-echo
-echo "Updating scripts with provided credentials..."
-sed -i "s/om_user/${name}/" pks-autoscaler.sh
-sed -i "s/om_user/${name}/" pks-autoscaler-scheduler.sh
-sed -i "s/om_password/${password}/" pks-autoscaler.sh
-sed -i "s/om_password/${password}/" pks-autoscaler-scheduler.sh
+sudo apt-get -y install bc jq
