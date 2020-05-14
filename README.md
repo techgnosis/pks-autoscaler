@@ -34,3 +34,5 @@ This project implements a workflow, within the OpsManager enviornment, to autosc
 * Make sure `om` CLI is installed on Ops Manager VM in `/usr/local/bin/`
 * Run the `pks-autoscaler-setup.sh` script to install `jq`, `yq`, and `bc` and add credentials to scripts
 * Schedule the `pks-autoscaler-schduler.sh` or execute the `pks-autoscaler.sh`
+    * `pks-autoscaler-scheduler.sh` runs one time
+    * `pks-autoscaler.sh` runs in a while-loop
