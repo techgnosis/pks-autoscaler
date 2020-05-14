@@ -22,17 +22,15 @@ This project implements a workflow, within the OpsManager enviornment, to autosc
 
 * SSH Access to Opsmanager VM.
 * OM CLI
-* JQ, Python YQ package, BC 
-* PKS CLI (may need to be setup **manually** on the Opsmanager server at the following location `/usr/local/bin/pks`)
+* PKS CLI
+* JQ, Python YQ package, BC
 * Configuration file `pks-autoscaler.config`. Sample provided. Modify as per your requirements.
  
  ## Setup
 
 * Clone this repo.
 * Modify the `pks-autoscaler.config` file.
-* Modify the values of following entries in `pks-autoscaler.sh` and `pks-autoscaler-scheduler.sh` 
-    * `OM_USERNAME="om_user"`
-    * `OM_PASSWORD="om_password"`
-* Run the `pks-autoscaler-setup.sh` script to setup required binaries. 
-* Make sure `pks` CLI is installed.
+* Make sure `pks` CLI is installed on Ops Manager VM in `/usr/local/bin/`
+* Make sure `om` CLI is installed on Ops Manager VM in `/usr/local/bin/`
+* Run the `pks-autoscaler-setup.sh` script to install `jq`, `yq`, and `bc` and add credentials to scripts
 * Schedule the `pks-autoscaler-schduler.sh` or execute the `pks-autoscaler.sh`
