@@ -1,5 +1,6 @@
 #!/bin/bash
 
+cp pks-autoscaler.config.template pks-autoscaler.config
 source pks-autoscaler.config
 
 echo "PKS-AUTOSCASLER PRE-REQ INSTALLER AND CHECKER"
@@ -27,5 +28,3 @@ fi
 
 sudo apt-get -y update
 sudo apt-get -y install bc jq
-
-cp pks-autoscaler.config.template pks-autoscaler.config
