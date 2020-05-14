@@ -70,9 +70,19 @@ do
 	cluster_name=`echo ${pks_cluster}| jq -r '.name'`
 	cluster_status=`echo ${pks_cluster}| jq -r '.last_action_state'`
 	cluster_node_count=`echo ${pks_cluster}|jq -r '.parameters.kubernetes_worker_instances'`
-	cluster_plan=`echo ${pks_cluster}| jq -r '.plan_name'`
+	
 
-	echo "${cluster_name}:- [ PLAN: ${cluster_plan}, MAX_WORKERS: ${max_worker_count}, MIN_WORKERS: ${min_worker_count}, CURRENT_WORKERS: ${cluster_node_count}, AVG_TOTAL_CPU: ${avg_total_cpu}%, AVG_MEMORY: ${avg_mem_usage}%. ]"| tee -a /tmp/pksresize.log
+	echo "AUTOSCALE PARAMETERS:"
+	echo "MIN CPU: ${MIN_TOTAL_CPU}"
+	echo "MAX_CPU: ${MAX_TOTAL_CPU}"
+	echo "MAX_WORKERS: ${max_worker_count}"
+	echo "MIN_WORKERS: ${min_worker_count}"
+	echo ""
+	echo "CLUSTER STATS:"
+	echo "CLUSTER_NAME: ${cluster_name}"
+	echo "CURRENT_WORKERS: ${cluster_node_count}"
+	echo "AVG_TOTAL_CPU: ${avg_total_cpu}%"
+	echo "AVG_MEMORY: ${avg_mem_usage}%"
 
 	if [[ ${avg_total_cpu} -lt ${MIN_TOTAL_CPU} ]] && [[ ${avg_mem_usage} -lt ${MAX_TOTAL_MEM} ]]
 	then
