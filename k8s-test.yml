@@ -17,16 +17,6 @@ spec:
       labels:
         app: stress
     spec:
-      # affinity:
-      #   podAntiAffinity:
-      #     requiredDuringSchedulingIgnoredDuringExecution:
-      #     - labelSelector:
-      #         matchExpressions:
-      #         - key: app
-      #           operator: In
-      #           values:
-      #           - stress
-      #       topologyKey: "kubernetes.io/hostname"
       containers:
         - name: stress
           image: progrium/stress
