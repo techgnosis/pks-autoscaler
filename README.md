@@ -36,3 +36,6 @@ This project implements a workflow, within the OpsManager enviornment, to autosc
 * Schedule the `pks-autoscaler-schduler.sh` or execute the `pks-autoscaler.sh`
     * `pks-autoscaler-scheduler.sh` runs one time
     * `pks-autoscaler.sh` runs in a while-loop
+
+TODO:
+* replace Python `yq` with https://github.com/bronze1man/yaml2json/releases/download/v1.3/yaml2json_linux_amd64

@@ -39,13 +39,3 @@ sed -i "s/om_user/${name}/" pks-autoscaler.sh
 sed -i "s/om_user/${name}/" pks-autoscaler-scheduler.sh
 sed -i "s/om_password/${password}/" pks-autoscaler.sh
 sed -i "s/om_password/${password}/" pks-autoscaler-scheduler.sh
-
-if [[ ${RUN_SCHEDULED} -eq 1 ]]
-then
-	echo "Setting up cron job..."
-	sudo systemctl start cron
-	if [[ $(sudo crontab -l 2>/dev/null | egrep -v "^(#|$)" | grep -q 'pks-autoscaler-scheduler.sh'; echo $?) == 1 ]]
-	then
-		sudo crontab -l 2>/dev/null; echo "*/${SCRIPT_FREQ_MIN} * * * * /home/ubuntu/pks-autoscaler/pks-autoscaler-scheduler.sh" | sudo crontab -
-	fi
-fi
