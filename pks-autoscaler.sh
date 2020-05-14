@@ -80,6 +80,7 @@ do
 	echo ""
 	echo "CLUSTER STATS:"
 	echo "CLUSTER_NAME: ${cluster_name}"
+	echo "CLUSTER STATUS: ${cluster_status}"
 	echo "CURRENT_WORKERS: ${cluster_node_count}"
 	echo "AVG_TOTAL_CPU: ${avg_total_cpu}%"
 	echo "AVG_MEMORY: ${avg_mem_usage}%"
@@ -100,9 +101,7 @@ do
 		else
 			echo "${cluster_name} last action not in successful state. Will wait before taking further action..."| tee -a /tmp/pksresize.log
 		fi
-	fi
-
-	if [[ ${avg_total_cpu} -gt ${MAX_TOTAL_CPU} ]] || [[ ${avg_mem_usage} -gt ${MAX_TOTAL_MEM} ]]
+	elif [[ ${avg_total_cpu} -gt ${MAX_TOTAL_CPU} ]] || [[ ${avg_mem_usage} -gt ${MAX_TOTAL_MEM} ]]
 	then
 		echo "${cluster_name} a candidate for node addition. Avg total CPU usage: ${avg_total_cpu}% / Avg. Mem usage: ${avg_mem_usage}%..."| tee -a /tmp/pksresize.log
 		if [[ ${cluster_status} == "succeeded" ]]
@@ -118,8 +117,11 @@ do
 		else
 			echo "${cluster_name} last action not in successful state. Will wait before taking further action..."| tee -a /tmp/pksresize.log
 		fi
+	else
+		echo ""
+		echo "No autoscale action required at this time"
+		echo ""
 	fi
-	echo
 done
 
 rm -f $TEMPFILE
