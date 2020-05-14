@@ -16,15 +16,6 @@ else
     sudo mv om-linux-4.5.0 /usr/local/bin/om
 fi
 
-if command -v yaml2json >/dev/null 2>&1 ; then
-  	echo "yaml2json installed. Skipping...."
-else
-  	echo "yaml2json not installed. Installing...."
-    wget https://github.com/bronze1man/yaml2json/releases/download/v1.3/yaml2json_linux_amd64
-    chmod +x yaml2json_linux_amd64
-    sudo mv yaml2json_linux_amd64 /usr/local/bin/yaml2json
-fi
-
 if command -v pks >/dev/null 2>&1 ; then
   	echo "PKS CLI installed. Skipping...."
 else

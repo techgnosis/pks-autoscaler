@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euxo pipefail
+set -euo pipefail
 
 if [[ -f pks-autoscaler.config ]]
 then
