@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euo pipefail
+set -euxo pipefail
 
 if [[ -f pks-autoscaler.config ]]
 then
@@ -9,11 +9,6 @@ else
 fi
 
 OM_TARGET="localhost"
-PKS_USERNAME="admin"
-
-PKS_API_EP=""
-BOSH_PKS_DEPLOYMENT=""
-BOSH_PKS_CLUSTERS=""
 TEMPFILE=`mktemp`
 
 calcavg()
@@ -34,9 +29,6 @@ calcavg()
 
 om -k -t ${OM_TARGET} -u ${OM_USERNAME} -p ${OM_PASSWORD} bosh-env > $TEMPFILE
 source $TEMPFILE
-om -k -t localhost -u ${OM_USERNAME} -p ${OM_PASSWORD} deployed-manifest -p pivotal-container-service | yaml2json | jq . > /tmp/pks_manifest.yaml
-PKS_API=`cat /tmp/pks_manifest.yaml |jq -r '.instance_groups[].properties.service_catalog.global_properties.pks_api_fqdn'`
-PKS_PASSWORD=`om  -k -t localhost -u ${OM_USERNAME} -p ${OM_PASSWORD} credentials --product-name pivotal-container-service -c .properties.uaa_admin_password -t json|jq -r '.secret'`
 
 if [ -z ${PKS_API} ]
 then
@@ -80,8 +72,6 @@ do
 	cluster_status=`echo ${pks_cluster}| jq -r '.last_action_state'`
 	cluster_node_count=`echo ${pks_cluster}|jq -r '.parameters.kubernetes_worker_instances'`
 	cluster_plan=`echo ${pks_cluster}| jq -r '.plan_name'`
-	max_worker_count=`cat /tmp/pks_manifest.yaml |jq -r --arg cluster_plan "$cluster_plan" '.instance_groups[].properties.service_catalog.plans[]| select (.name == $cluster_plan)|.metadata.max_worker_instances'`
-	min_worker_count=`cat /tmp/pks_manifest.yaml |jq -r --arg cluster_plan "$cluster_plan" '.instance_groups[].properties.service_catalog.plans[]| select (.name == $cluster_plan)|.metadata.worker_instances'`
 
 	echo "${cluster_name}:- [ PLAN: ${cluster_plan}, MAX_WORKERS: ${max_worker_count}, MIN_WORKERS: ${min_worker_count}, CURRENT_WORKERS: ${cluster_node_count}, AVG_TOTAL_CPU: ${avg_total_cpu}%, AVG_MEMORY: ${avg_mem_usage}%. ]"| tee -a /tmp/pksresize.log
 
@@ -124,4 +114,3 @@ do
 done
 
 rm -f $TEMPFILE
-rm -f /tmp/pks_manifest.yaml
