@@ -27,3 +27,5 @@ fi
 
 sudo apt-get -y update
 sudo apt-get -y install bc jq
+
+cp pks-autoscaler.config.template pks-autoscaler.config
