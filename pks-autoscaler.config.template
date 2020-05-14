@@ -1,8 +1,12 @@
-# Username to run om with
+# Username to run `om` with
 OM_USERNAME=username
 
 # Password to run `om` with
 OM_PASSWORD=password
+
+# OM URL
+# use 'localhost' if you are running from Ops Man VM
+OM_TARGET=url
 
 # PKS API URL
 PKS_API=url

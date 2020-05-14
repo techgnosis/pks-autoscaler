@@ -8,7 +8,6 @@ else
 	exit 1
 fi
 
-OM_TARGET="localhost"
 TEMPFILE=`mktemp`
 
 calcavg()
