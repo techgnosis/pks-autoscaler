@@ -17,7 +17,7 @@ def delete_vm(vm_cid):
     
 
 completed = subprocess.run(
-    ['bosh -d \'{0}\' vms --json --tty'.format(DEPLOYMENT)],
+    ['bosh -d \'{0}\' vms --json'.format(DEPLOYMENT)],
     stdout=PIPE,
     stderr=PIPE,
     shell=True
@@ -35,7 +35,8 @@ print(len(vms))
 dead_vms = []
 for vm in vms:
     if vm['process_state'] == 'unresponsive agent':
-        dead_vms.append(vm['vm_cid'])
+        if vm['instance'].startswith('worker'):
+            dead_vms.append(vm['vm_cid'])
 
 print(dead_vms)
 
