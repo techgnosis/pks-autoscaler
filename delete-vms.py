@@ -23,15 +23,12 @@ completed = subprocess.run(
     shell=True
 )
 
-raw = completed.stdout
-
-json_string = raw.decode('utf-8')
+json_string = completed.stdout.decode('utf-8')
 
 vm_json = json.loads(json_string)
 
 vms = vm_json['Tables'][0]['Rows']
 
-print(len(vms))
 dead_vms = []
 for vm in vms:
     if vm['process_state'] == 'unresponsive agent':
